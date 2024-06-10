@@ -1,0 +1,84 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    admin dashboard
+{% endblock title %}
+
+{% block body %}
+    
+<h1 class="text-center mt-3">App Performance</h1>
+<hr>
+
+<div class="row" >
+    <div class="col-md-2">
+        <div class="card text-center">
+            <h4 class="card-title">Normal Users</h4>
+            <h3 class="card-body"> {{ total_users }}</h3>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center">
+            <h4 class="card-title ">Total Creators</h4>
+            <h3 class="card-body"> {{ total_creators }}</h3>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center">
+            <h4 class="card-title">Total Albums</h4>
+            <h3 class="card-body"> {{ total_albums }}</h3>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center">
+            <h4 class="card-title">Total songs</h4>
+            <h3 class="card-body"> {{ total_songs }}</h3>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center">
+            <h4 class="card-title ">Average Rating</h4>
+            <h3 class="card-body"> {{ avg_rating }}</h3>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center">
+            <h4 class="card-title">Genre</h4>
+            <h3 class="card-body"> {{ total_genres }}</h3>
+        </div>
+    </div>
+</div>
+
+{% if creators|length == 0 %}
+<h2 class="text-center mt-4">no creators registered yet</h2>
+{% else %}
+<h2 class="text-center mt-4">All Creators</h2>
+<table class="table text-center table-striped table-secondary">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Albums uploaded</th>
+
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for creator in creators %}
+            <tr>
+                <td>{{ creator.name }}</td>
+                <td>{{ creator.username }}</td>
+                <td>{{ creator.albums|length }}</td>
+                <td>
+                    {% if creator.is_blacklisted %}
+                        <a href="{{ url_for('blacklist_creator', user_id=creator.id) }}" class="btn btn-success">Whitelist</a>
+                    {% else %}
+                        <a href="{{ url_for('blacklist_creator', user_id=creator.id) }}" class="btn btn-dark">Blacklist</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+{% endblock body %}

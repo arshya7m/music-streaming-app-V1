@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Welcome
+{% endblock title %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="text-center mb-4">
+                    <h1>
+                        WELCOME TO <br> MUSIC STREAMING APP
+                    </h1>
+                </div><br><br>
+                <div class="text-center mb-4">
+                    <a href="{{ url_for('admin_login') }}" class="btn btn-danger mr-2">Login as Admin</a><br><br><br>
+                    <a href="{{ url_for('user_login') }}" class="btn btn-success mx-3">Login as User</a>
+                    <a href="{{ url_for('user_register') }}" class="btn btn-info">Register as User</a>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+{% endblock body %}

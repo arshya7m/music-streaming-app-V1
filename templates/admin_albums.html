@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    admin albums
+{% endblock title %}
+
+{% block body %}
+    
+    <div class="container">
+        <h1 class="text-center mb-4">ALL ALBUMS</h1>
+    </div>
+
+    <form>
+        <div class="input-group mb-3">
+            <select class="form-select" name="category">
+                <option value="albums" selected>Albums</option>
+                <option value="genre">Genre</option>
+                <option value="artist">Artist</option>
+            </select>
+            <input type="text" class="form-control" placeholder="Search here" name="query" id="query">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+    
+{% if albums|length != 0 %}
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-dark table-striped text-center">
+            <thead>
+                <tr>
+                    <th>Album name</th>
+                    <th>Artist</th>                    
+                    <th>Genre</th>
+                    <th>No. of tracks</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for album in albums %}   
+                {% if (artist and artist.lower() in album.artist.lower()) or (genre and genre.lower() == album.genre.lower()) or (not artist and not genre) %}
+        
+                <tr>
+                    <td>{{ album.name }}</td>
+                    <td>{{ album.artist }}</td>
+                    <td>{{ album.genre }}</td>
+                    <td>{{ album.songs|length }}</td>
+                    <td>
+                        <a href="{{ url_for('delete_album', album_id=album.id) }}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+{% else %}
+    <h3>No albums uploaded in the app yet</h3>
+{% endif %}
+
+
+   
+{% endblock body %}

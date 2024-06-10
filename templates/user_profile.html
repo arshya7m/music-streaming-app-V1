@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    User Profile
+{% endblock title %}
+
+{% block body %}
+
+
+<h1 class=" mb-2">Profile Page</h1>
+<h4 class=" mb-2">username: {{ user.username }}</h4> <!-- Display username as heading -->
+
+<!-- User profile form -->
+<h2 class="text-center mb-4">Edit your Profile</h2>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <form method="POST">
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Change Name:</label>
+                <input type="text" name="name" class="form-control" id="name" value="{{ user.name }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="username" class="form-label">Change Username:</label>
+                <input type="text" name="username" class="form-control" id="username" value="{{ user.username }}" required>
+            </div>
+
+            <div class="mb-3">
+                
+                <label for="oldpassword" class="form-label">Current Password:</label>
+                <input type="password" name="oldpassword" class="form-control" id="oldpassword" required>
+            </div>
+         
+            <div class="mb-3">
+                <label for="password" class="form-label">Change Password:</label>
+                <input type="password" name="password" class="form-control" id="password" required>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-success">Update Profile</button>
+
+            </div>
+        </form>
+
+    </div>
+
+</div>
+
+        
+    
+
+{% endblock body %}

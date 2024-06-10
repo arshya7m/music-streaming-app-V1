@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Edit album
+{% endblock title %}
+
+{% block body %}
+  
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h1 class=" mb-5">Edit Album</h1>
+
+        <form method="POST">
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Album Name:</label>
+                <input type="text" name="name" class="form-control" id="name"  value="{{ album.name }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="genre" class="form-label">Genre:</label>
+                <input type="text" name="genre" class="form-control" id="genre" value="{{ album.genre }}" required>
+            </div>
+
+            <div class="mb-3">
+                
+                <label for="artist" class="form-label">Artist Name:</label>
+                <input type="text" name="artist" class="form-control" id="artist" value="{{ album.artist }}" required>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-success">Save Changes</button>
+
+            </div>
+        </form>
+
+    </div>
+{% endblock body %}

@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    View playlist
+{% endblock title %}
+
+{% block body %}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>{{ playlist.name }}</h2><br><hr>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Song Title</th>
+                    <th>Album Name</th>
+                    <th>Genre</th>
+                    <th>Artist</th>
+                    <th>Rating</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for song in playlist.songs %}           
+                <tr>
+                    <td>{{ song.title }}</td>
+                    <td>{{ song.album.name }}</td>
+                    <td>{{ song.album.genre }}</td>
+                    <td>{{ song.album.artist }}</td>
+                    <td>{{ song.rating }}</td>
+                    <td>
+                        <a href="{{ url_for('read_lyrics', song_id=song.id) }}" class="btn btn-sm btn-info">Read Lyrics</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</div>
+</div>
+<br><hr>
+
+{% endblock body %}

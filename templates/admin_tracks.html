@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    admin tracks
+{% endblock title %}
+
+{% block body %}
+    
+<div class="container">
+    <h1 class="text-center mb-4">ALL TRACKS</h1>
+</div>
+
+<form>
+    <div class="input-group mb-3">
+        <select class="form-select" name="category">
+            <option value="songs" selected>Songs</option>
+            <option value="genre">Genre</option>
+            <option value="rating">Rating</option>
+        </select>
+        <input type="text" class="form-control" placeholder="Search here" name="query" id="query">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
+
+{% if songs|length != 0 %}
+<div class="row">
+<div class="col-md-12">
+    <table class="table table-dark table-striped text-center">
+        <thead>
+            <tr>
+                <th>Song title</th>
+                <th>Rating</th>                    
+                <th>Genre</th>
+                <th>Read Lyrics</th>
+                <th>Delete song</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for song in songs %}   
+            {% if (genre and genre.lower() in song.album.genre.lower()) or (rating and rating == song.rating) or (not rating and not genre) %}
+        
+                <tr>
+                    <td>{{ song.title }}</td>
+                    <td>{{ song.rating }}</td>
+                    <td>{{ song.album.genre }}</td>
+                    <td>
+                        <a href="{{ url_for('read_lyrics', song_id=song.id) }}" class="btn btn-warning">View lyrics</a>
+                    </td>
+                    <td>
+                        <a href="{{ url_for('delete_song', song_id=song.id) }}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+</div>
+{% else %}
+<h3>No songs uploaded in the app yet</h3>
+{% endif %}
+{% endblock body %}

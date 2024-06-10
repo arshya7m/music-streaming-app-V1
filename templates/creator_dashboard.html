@@ -1,0 +1,105 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Creator Dashboard
+{% endblock title %}
+
+{% block body %}
+    <h2 class="text-center mb-3">Welcome, {{ user.name }}!</h2>
+
+    {% if user.is_creator %}
+    <div class="text-center">
+        <a href="{{ url_for('add_album') }}" class="btn btn-primary">Create an Album</a>
+    </div>
+        {% if user.albums|length == 0 %}
+        <h2>You haven't created any albums yet.</h2>
+        
+        {% else %}
+        <h2>Dashboard:</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <h6 class="card-title">Total songs uploaded</h6>
+                    <h3 class="card-body"> {{ total_songs }}</h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <h6 class="card-title ">Average Rating</h6>
+                    <h3 class="card-body"> {{ avg_rating }}</h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <h6 class="card-title">Total Albums</h6>
+                    <h3 class="card-body"> {{ total_albums }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <br><hr>
+            <h2>My Albums:</h2>
+        
+            {% for album in user.albums %}
+            
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ album.name }}</h5>
+                            <div >
+                                <a href="{{ url_for('add_song', album_id=album.id) }}" class="btn btn-success mb-1">Add Song</a><br>
+                                <a href="{{ url_for('edit_album', album_id=album.id) }}" class="btn btn-success mb-1">Edit Album</a><br>
+                                <a href="{{ url_for('delete_album', album_id=album.id) }}" class="btn btn-danger">Delete Album</a>
+                            </div>
+                    </div>
+
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Song Title</th>
+                                        <th>Rating (1-10)</th>
+                                        <th>Duration (in sec)</th>
+                                        <th>Date Created</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for song in album.songs %}
+                                        <tr>
+                                            <td>{{ song.title }}</td>
+                                            <td>{{ song.rating }}</td>
+                                            <td>{{ song.duration }}</td>
+                                            <td>{{ song.date_created }}</td>
+                                            <td>
+                                                <a href="{{ url_for('read_lyrics', song_id=song.id) }}" class="btn btn-sm btn-success">Read Lyrics</a>
+                                                <a href="{{ url_for('edit_song', song_id=song.id) }}" class="btn btn-sm btn-success">Edit Song</a>
+                                                <a href="{{ url_for('delete_song', song_id=song.id) }}" class="btn btn-sm btn-danger">Delete Song</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            <br>
+            {% endfor %}
+        
+        
+        {% endif %}
+    {% else %}
+    <div class="container mt-5">
+        <div class="d-flex justify-content-center">
+            <div class="text-center">
+                <h2>You're not registered as a creator yet.</h2>
+                <form action="{{ url_for('creator_register') }}" method="post">
+                    <button type="submit" value="register" class="btn btn-success">Register as Creator</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    {% endif %}
+            
+{% endblock body %}
